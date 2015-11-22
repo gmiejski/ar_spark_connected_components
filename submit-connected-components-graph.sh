@@ -7,5 +7,5 @@
 module load plgrid/apps/spark
 start-multinode-spark-cluster.sh
 $SPARK_HOME/bin/spark-submit --master spark://`hostname`:7077 \
---class connectedcomponents.SimpleConnectedComponents $HOME/lab2/connected-components.jar false
+--class connectedcomponents.ConnectedComponentsGeneratedGraph $HOME/lab2/connected-components.jar false
 stop-multinode-spark-cluster.sh

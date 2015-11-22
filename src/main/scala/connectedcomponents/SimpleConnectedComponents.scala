@@ -11,8 +11,6 @@ import org.apache.spark.{SparkConf, SparkContext, graphx}
  * Created by grzegorz.miejski on 15/11/15.
  */
 object SimpleConnectedComponents {
-
-
   def main(args: Array[String]) {
 
     println(args)
