@@ -1,3 +1,5 @@
+package pagerank
+
 
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -5,7 +7,7 @@ object SimplePageRank {
   def main(args: Array[String]) {
     val ITERATIONS = 10
 
-    val conf = new SparkConf().setAppName("Simple PageRank").setMaster("local[4]")
+    val conf = new SparkConf().setAppName("Simple PageRank")
     val sc = new SparkContext(conf)
 
 

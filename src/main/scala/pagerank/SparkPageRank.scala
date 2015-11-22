@@ -1,8 +1,9 @@
+package pagerank
+
 /**
  * Created by malawski on 10/25/14.
  */
 
-  import org.apache.spark.SparkContext._
   import org.apache.spark.{SparkConf, SparkContext}
 
   /**
