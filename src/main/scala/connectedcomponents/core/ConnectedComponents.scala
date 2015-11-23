@@ -12,6 +12,8 @@ object ConnectedComponents {
 
   def connectedComponentsGraph(sc: SparkContext, startingVertexes: RDD[(VertexId, Long)], startingEdges: RDD[Edge[Int]]): Graph[Long, Int] = {
 
+    val start = System.currentTimeMillis()
+
     var shouldContinue = true
     var iterations = 0
 
@@ -32,11 +34,13 @@ object ConnectedComponents {
       println(updates)
     }
 
-
     println(s"Finished after $iterations iterations")
 
+    val graph = Graph(vertexes, startingEdges, 1111L)
+    val end = System.currentTimeMillis()
 
-    Graph(vertexes, startingEdges, 1111L)
+    println(s"My connected components process took ${end - start} miliseconds")
+    graph
   }
 
   def changesDetected(vertexes: RDD[(VertexId, Long)], newVertexes: RDD[(VertexId, Long)]): Boolean = {

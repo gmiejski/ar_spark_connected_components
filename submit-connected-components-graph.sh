@@ -1,5 +1,5 @@
 #!/bin/env bash
-#PBS -l walltime=00:10:00
+#PBS -l walltime=01:00:00
 #PBS -l nodes=3:ppn=12
 #PBS -A plggrzmiejski2015a
 #PBS -q plgrid-testing

@@ -18,7 +18,11 @@ object ConnectedComponentsGeneratedGraph {
     val conf = new SparkConf().setAppName("Simple PageRank").setMaster("local[4]")
     val sc = new SparkContext(conf)
 
-    val graph: Graph[Long, Int] = GraphGenerators.rmatGraph(sc, 1000, 200).mapVertices((id, _) => id)
+    val verticesCount: Int = 1000000
+    val edgesCount: Int = 200000
+    println(s"Graph stats: vertices = $verticesCount, edges = $edgesCount")
+
+    val graph: Graph[Long, Int] = GraphGenerators.rmatGraph(sc, verticesCount, edgesCount).mapVertices((id, _) => id)
 
     val verticesForAlgorithm: RDD[(VertexId, VertexId)] = graph.vertices.map(s => (s._1, s._2))
     val edgesForAlgorith = graph.edges.map(s => (s.srcId, s.dstId))
@@ -37,7 +41,12 @@ object ConnectedComponentsGeneratedGraph {
       compareWithOriginalConnectedComponents(graph, connectedComponentsGraph, v1)
     }
 
+    val start = System.currentTimeMillis()
 
+    val ccSparkGraph = graph.connectedComponents()
+    val end = System.currentTimeMillis()
+
+    println(s"Spark connected components took : ${end-start} milliseconds")
 
     val connectedComponentsGraph2: Graph[Long, Int] = ConnectedComponents.connectedComponentsGraph(sc, verticesForAlgorithm, graph.edges)
     val finalGroups2 = ConnectedComponents.groupVertexes(connectedComponentsGraph2).collect()
