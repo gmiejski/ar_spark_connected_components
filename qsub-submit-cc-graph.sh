@@ -4,6 +4,8 @@
 #PBS -A plggrzmiejski2015a
 #PBS -q plgrid-testing
 
+cd /people/plggrzmiejski/lab2
+
 resultsFolder="results"
 
 rm -rf $resultsFolder/
@@ -30,7 +32,7 @@ do
         for executorsCount in "${executorsCounts[@]}"
         do
             echo "---- Executors count: " $executorsCount
-            $SPARK_HOME/bin/spark-submit --master spark://`hostname`:7077 --class connectedcomponents.ConnectedComponentsGeneratedGraph  $HOME/lab2/connected-components.jar $@  >> $resultsFolder/results_${verticesCount}_${edgesCount}_${executorsCount} 2>&1
+            $SPARK_HOME/bin/spark-submit --master spark://`hostname`:7077 --class connectedcomponents.ConnectedComponentsGeneratedGraph  $HOME/lab2/connected-components.jar $executorsCount $verticesCount $edgesCount false  >> $resultsFolder/results_${verticesCount}_${edgesCount}_${executorsCount} 2>&1
         done
     done
 done
