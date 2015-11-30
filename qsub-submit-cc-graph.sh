@@ -8,9 +8,8 @@ cd /people/plggrzmiejski/lab2
 
 resultsFolder="results"
 
-rm -rf $resultsFolder/
-mkdir $resultsFolder
-echo "creating project "$resultsFolder
+#mkdir $resultsFolder
+#echo "creating project "$resultsFolder
 
 ls $resultsFolder
 
@@ -19,9 +18,9 @@ start-multinode-spark-cluster.sh
 
 `cat $PBS_NODEFILE | uniq | grep -v $SPARK_MASTER_HOST`
 
-executorsCounts=(2 4 8)
-verticesCounts=(1000000 2000000 4000000)
+verticesCounts=(4000000)
 edgesCounts=(100000 200000 400000)
+executorsCounts=(2 4 8)
 
 for verticesCount in "${verticesCounts[@]}"
 do
