@@ -1,7 +1,7 @@
 package connectedcomponents
 
 import connectedcomponents.check.ConnectedComponentsCompare
-import connectedcomponents.core.ConnectedComponents
+import connectedcomponents.core.{ConnectedComponents2, ConnectedComponents}
 import org.apache.spark.graphx.{Edge, Graph, VertexId}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext, graphx}
@@ -23,9 +23,9 @@ object SimpleConnectedComponents {
 
     val edgesRdd = edges.flatMap(s => List(Edge(s._1, s._2, 123),Edge(s._2, s._1, 123)))
 
-    val graph = Graph(vertexes, edgesRdd, 1111L)
+    val graph = Graph(vertexes, edgesRdd, Long.MaxValue)
 
-    val connectedComponentsGraph: Graph[Long, Int] = ConnectedComponents.connectedComponentsGraph(sc, graph.vertices, graph.edges)
+    val connectedComponentsGraph: Graph[Long, Int] = ConnectedComponents2.connectedComponentsGraph(sc, graph)
     val finalGroups = ConnectedComponents.groupVertexes(connectedComponentsGraph).collect()
     val finalGroupsSpark = ConnectedComponents.groupVertexes(graph.connectedComponents()).collect()
 
