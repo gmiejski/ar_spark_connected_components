@@ -18,14 +18,14 @@ object ConnectedComponents {
     var iterations = 0
 
     var vertexes = startingVertexes
-    val edges = startingEdges.flatMap(s => List((s.srcId, s.dstId), (s.dstId, s.srcId)))
+    val edges: RDD[(VertexId, VertexId)] = startingEdges.flatMap(s => List((s.srcId, s.dstId), (s.dstId, s.srcId)))
 
     while (shouldContinue) {
       iterations += 1
       println(s"Starting iteration: $iterations")
 
-      val updatedValues = edges.join(vertexes)
-      val updates = edges.join(vertexes).map(s => s._2)
+      val join: RDD[(VertexId, (VertexId, VertexId))] = edges.join(vertexes)
+      val updates = join.map(s => s._2)
 
       val smallest_numbers = updates.reduceByKey(math.min)
       val newVertexes = vertexes.join(smallest_numbers).map(s => (s._1, math.min(s._2._1, s._2._2)))

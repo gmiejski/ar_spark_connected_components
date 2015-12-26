@@ -26,7 +26,7 @@ object ConnectedComponentsGeneratedGraphPregel {
     val edgesCount: Int = args.apply(2).toInt
     val debug: Boolean = args.apply(3).toBoolean
 
-    val conf = new SparkConf().setAppName("Simple PageRank").setMaster(s"local[$processors]")
+    val conf = new SparkConf().setAppName("Simple PageRank")
     val sc = new SparkContext(conf)
 
     println(s"Graph stats: vertices = $verticesCount, edges = $edgesCount")

@@ -20,7 +20,7 @@ start-multinode-spark-cluster.sh
 
 `cat $PBS_NODEFILE | uniq | grep -v $SPARK_MASTER_HOST`
 
-verticesCounts=(1000000)
+verticesCounts=(1000000 2000000 4000000)
 edgesCounts=(100000 200000 400000)
 executorsCounts=(2 4 8)
 
@@ -39,7 +39,5 @@ do
         done
     done
 done
-
-
 
 stop-multinode-spark-cluster.sh

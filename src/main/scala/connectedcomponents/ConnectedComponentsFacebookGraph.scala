@@ -14,18 +14,27 @@ object ConnectedComponentsFacebookGraph {
   def main(args: Array[String]) {
 
 
-    val conf = new SparkConf().setAppName("Simple PageRank").setMaster("local[4]")
+    val conf = new SparkConf().setAppName("Simple PageRank").setMaster("local[*]")
     val sc = new SparkContext(conf)
 
 
     val edges = sc.textFile("src/main/resources/facebook.edges")
 
 
+
     val cachedEdgesRDD = edges.map(s => s.split(" ")).map(s => (s.apply(0).toLong, s.apply(1).toLong)).cache()
     val verticesForAlgorithm: RDD[(VertexId, VertexId)] = cachedEdgesRDD.flatMap(s => List(s._1, s._2)).distinct().map(s => (s, s))
     val edgesForAlgorithm = cachedEdgesRDD.map(s => Edge(s._1, s._2, 123123))
 
+
+    val start = System.currentTimeMillis()
+
     val connectedComponentsGraph: Graph[Long, Int] = ConnectedComponents.connectedComponentsGraph(sc, verticesForAlgorithm, edgesForAlgorithm)
+
+    val end = System.currentTimeMillis()
+
+    println(s"Spark connected components took : ${end - start} milliseconds")
+
 
     val graph = Graph(verticesForAlgorithm, edgesForAlgorithm)
     val v1 = connectedComponentsGraph.vertices
